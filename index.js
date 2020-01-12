@@ -4,16 +4,20 @@ require('dotenv').config();
 let bot = new discord.Client();
 
 bot.on('message', message => {
-    if (message.author.username == "Developer") {
-        if (message.channel.name != 'memes') {
-            if (message.type !== 'dm') {
-                message.delete();
-            } else {
-                console.log('couldent delete image');
+    try {
+        if (message.author.username == "diamond dunkers YT") {
+            if (message.channel.name != 'memes') {
+                if (message.type !== 'dm') {
+                    message.delete();
+                } else {
+                    console.log('couldent delete image');
+                }
             }
+        } else {
+            console.log(`${message.author} user is not blacklisted`);
         }
-    } else {
-        console.log(`${message.author} user is not blacklisted`);
+    } catch(err) {
+        console.log(err);
     }
 });
 
