@@ -1,5 +1,6 @@
 let discord = require('discord.js');
 require('dotenv').config();
+require('http').createServer().listen(3000);
 
 let bot = new discord.Client();
 
