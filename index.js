@@ -1,12 +1,13 @@
 let discord = require('discord.js');
+var fs = require('fs');
 require('dotenv').config();
 // require('http').createServer().listen(3000); // only for api's the require a port num
 
 let bot = new discord.Client();
-var prefix = '~';
+var prefix = '!';
 
 bot.on('message', message => {
-    var args = message.content.split(' ').join(prefix.length);
+    var args = message.content.substring(prefix.length).split(' ');
 
     try { // put all messages in the try function
         switch(args[0]) {
@@ -14,6 +15,11 @@ bot.on('message', message => {
                 var author = message.member.nickname;
                 message.sendMessage(`Hi ${author}`);
             break;
+
+            case 'help':
+                var author = message.author.username;
+                message.sendMessage(`${author} here is only one command hi more are comming soon`);
+                break;
         }
 
         if (message.author.username == "diamond dunkers YT") {
@@ -25,10 +31,19 @@ bot.on('message', message => {
                 }
             }
         } else {
-            console.log(`${message.author} user is not blacklisted`);
+            console.log(`${message.author.username} user is not blacklisted`);
+            fs.writeFile('userlog.txt', `${message.author.username} is not blacklisted` (error) => {
+                if (error) {
+                    throw err;
+                }
+            })
         }
     } catch(err) {
-        console.log(err);
+        fs.writeFile('log.txt', err, (error) => {
+            if (error) {
+                throw err;
+            }
+        })
     }
 });
 
