@@ -1,11 +1,21 @@
 let discord = require('discord.js');
 require('dotenv').config();
-require('http').createServer().listen(3000);
+// require('http').createServer().listen(3000); // only for api's the require a port num
 
 let bot = new discord.Client();
+var prefix = '~';
 
 bot.on('message', message => {
-    try {
+    var args = message.content.split(' ').join(prefix.length);
+
+    try { // put all messages in the try function
+        switch(args[0]) {
+            case 'hi':
+                var author = message.member.nickname;
+                message.sendMessage(`Hi ${author}`);
+            break;
+        }
+
         if (message.author.username == "diamond dunkers YT") {
             if (message.channel.name != 'memes') {
                 if (message.type !== 'dm') {
