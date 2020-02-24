@@ -2,7 +2,7 @@
   "name": "discordbotjs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "pinkbot.js",
   "scripts": {
     "build": "node index.js build --output public"
   },
