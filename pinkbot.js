@@ -35,7 +35,14 @@ doc.onSnapshot(function (doc) {
     })
 })
 
-const badnames = ['pipeBomb', 'pipe bomb', 'bomb', 'weed'];
+const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
+
+bot.on('message', message => {
+    const Msgcontent = message.content.toLocaleLowerCase();
+    if (Msgcontent.includes(badnames)) {
+        message.channel.delete();
+    }
+})
 
 bot.on('message', message => {
     var args = message.content.substring(prefix.length).split(' ');
