@@ -1,13 +1,12 @@
 let discord = require('discord.js');
 var fs = require('fs');
 require('dotenv').config();
-var firebase = require('firebase');
+const firebase = require('firebase');
 // require('http').createServer().listen(3000); // only for api's the require a port num
 
 let bot = new discord.Client();
-var prefix = '!';
-// const configPrefix = "§";
-// const configPrefix2 = "<";
+var prefix = '_';
+
 const version = "0.1.0";
 var configType = 3;
 
@@ -26,8 +25,8 @@ var firestore = firebase.firestore();
 var configCollection = firestore.collection('config');
 var doc = firestore.collection('/config').doc('/0PLo2AWvg2UGwfFMTK2U');
 
-doc.onSnapshot(function (doc) {
-    bot.user.setPresence({
+doc.onSnapshot(async function(doc) {
+    await bot.user.setPresence({
         game: {
             name: doc.data().statName,
             type: doc.data().statNumber,
@@ -38,14 +37,12 @@ doc.onSnapshot(function (doc) {
 const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 
 bot.on('message', message => {
+    const args = message.content.substring(prefix.length).split(' ');
+
     const Msgcontent = message.content.toLocaleLowerCase();
     if (Msgcontent.includes(badnames)) {
         message.channel.delete();
     }
-})
-
-bot.on('message', message => {
-    var args = message.content.substring(prefix.length).split(' ');
 
     try { // put all messages in the try function to catch errors
         switch (args[0]) {
@@ -80,20 +77,20 @@ bot.on('message', message => {
             console.log('\033[39m');
         }
     } catch (err) {
-        var fileData = fs.readFileSync('log.txt', 'utf8');
+        // var fileData = fs.readFileSync('log.txt', 'utf8');
 
-        fs.writeFile('log.txt', `\n${fileData} \n ${new Date} \n ${err}`);
+        // fs.writeFile('log.txt', `\n${fileData} \n ${new Date} \n ${err}`);
     }
 });
 
 bot.on('guildMemberAdd', member => {
     const channel = member.guild.channels.find(ch => {
-        ch.name === 'welcome'
+        ch.name === 'system-messages'
     });
 
     if (!channel) { return; }
 
-    channel.sendMessage(`Welcome to the server, ${member}`);
+    channel.sendMessage(`Welcome to the server, @${member}`);
 })
 
 bot.on('ready', () => {
