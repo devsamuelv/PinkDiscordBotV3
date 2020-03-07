@@ -5,10 +5,9 @@ const firebase = require('firebase');
 // require('http').createServer().listen(3000); // only for api's the require a port num
 
 let bot = new discord.Client();
-var prefix = '_';
+const prefix = '_';
 
 const version = "0.1.0";
-var configType = 3;
 
 firebase.initializeApp({
     apiKey: "AIzaSyACX60OfX5FE3T6Kr1kBw_lZqqILu8DYmM",
@@ -37,29 +36,22 @@ doc.onSnapshot(async function(doc) {
 const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 
 bot.on('message', message => {
-    const args = message.content.substring(prefix.length).split(' ');
+    const args = message.content.substr(prefix.length).split(' ');
 
-    const Msgcontent = message.content.toLocaleLowerCase();
     if (Msgcontent.includes(badnames)) {
         message.channel.delete();
     }
 
-    try { // put all messages in the try function to catch errors
+    try { 
+        // put all messages in the try function to catch errors
+
         switch (args[0]) {
-            case 'hi':
-                var author = message.member.nickname;
-                message.sendMessage(`Hi ${author}`);
-                break;
+            case "meme":
+                message.channel.send("Sending Memes");
+            break;
 
-            case 'help':
-                var author = message.author.username;
-                message.sendMessage(`${author} here is only one command hi more are comming soon`);
-                break;
-
-            case 'info':
-                message.send(`( ${new Date} )\n`);
-                message.send(`Current Version ${version} \n`);
-                break;
+            case "help":
+                message.channel.send("Commands: meme, help");
         }
 
         if (message.author.username == "Diamonddunkers") {
