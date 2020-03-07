@@ -38,7 +38,7 @@ const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 bot.on('message', message => {
     const args = message.content.substr(prefix.length).split(' ');
 
-    if (Msgcontent.includes(badnames)) {
+    if (message.content.includes(badnames)) {
         message.channel.delete();
     }
 
