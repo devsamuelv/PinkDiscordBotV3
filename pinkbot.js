@@ -33,6 +33,8 @@ doc.onSnapshot(async function(doc) {
     })
 })
 
+const mods = ["Developer", "Bradley"];
+
 const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 
 bot.on('message', message => {
@@ -51,7 +53,27 @@ bot.on('message', message => {
             break;
 
             case "help":
-                message.channel.send("Commands: meme, help");
+                message.channel.send("Commands: meme, help, hi");
+            break;
+
+            case "ban": 
+                const banUser = message.mentions.users.first();
+                const banMessage = args[2];
+
+                if (message.author.username === mods) {
+                    message.guild.member(banUser).ban(banMessage).then(() => {
+                        message.channel.send(`the user ${banUser} was banned`);
+                    }).catch((err) => {
+                        message.channel.send(`Error User Not Banned ${err}`);
+                    })
+                }
+
+            break;
+
+            case "hi":
+                const author = message.author.username;
+                message.channel.send(`Hello ${author}`);
+            break;
         }
 
         if (message.author.username == "Diamonddunkers") {
@@ -69,9 +91,7 @@ bot.on('message', message => {
             console.log('\033[39m');
         }
     } catch (err) {
-        // var fileData = fs.readFileSync('log.txt', 'utf8');
-
-        // fs.writeFile('log.txt', `\n${fileData} \n ${new Date} \n ${err}`);
+        // nothing here
     }
 });
 
@@ -87,18 +107,6 @@ bot.on('guildMemberAdd', member => {
 
 bot.on('ready', () => {
     console.log('ready');
-    // bot.user.setPresence({
-    //     game: {
-    //         name: "🎧the chat🎧",
-    //         type: 2
-    //     }
-    // })
-    // bot.user.setPresence({
-    //     game: {
-    //         name: "🎧 the chat 🎧",
-    //         type: 2
-    //     }
-    // })
 });
 
 bot.login(process.env.TOKEN);
