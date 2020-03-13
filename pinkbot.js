@@ -56,6 +56,7 @@ bot.on('message', message => {
                 message.channel.send("Commands: meme, help, hi");
             break;
 
+            // fix banning its not getting the command
             case "ban": 
                 const banUser = message.mentions.users.first();
                 const banMessage = args[2];

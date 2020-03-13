@@ -4,7 +4,7 @@
     "description": "",
     "main": "pinkbot.js",
     "scripts": {
-        "build": "node pinkbot.js build --output public"
+        "build": "node pinkbot.js build"
     },
     "author": "",
     "license": "ISC",
