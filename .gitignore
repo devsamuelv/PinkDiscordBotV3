@@ -1,5 +1,5 @@
-node_modules
-.vs
+/node_modules
 log.txt
 .gitignore
 .env
+.vs

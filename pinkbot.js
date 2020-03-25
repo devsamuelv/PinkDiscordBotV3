@@ -7,8 +7,6 @@ const firebase = require('firebase');
 let bot = new discord.Client();
 const prefix = '_';
 
-const version = "0.1.0";
-
 firebase.initializeApp({
     apiKey: "AIzaSyACX60OfX5FE3T6Kr1kBw_lZqqILu8DYmM",
     authDomain: "pinkteamb.firebaseapp.com",
@@ -24,16 +22,16 @@ var firestore = firebase.firestore();
 var configCollection = firestore.collection('config');
 var doc = firestore.collection('/config').doc('/0PLo2AWvg2UGwfFMTK2U');
 
-doc.onSnapshot(async function(doc) {
-    await bot.user.setPresence({
-        game: {
-            name: doc.data().statName,
-            type: doc.data().statNumber,
-        }
-    })
-})
+// doc.onSnapshot(async function(doc) {
+//     await bot.user.setPresence({
+//         game: {
+//             name: doc.data().statName,
+//             type: doc.data().statNumber,
+//         }
+//     })
+// })
 
-const mods = ["Developer", "Bradley"];
+const mods = ["Developer", "Bradley", "Dr0verbuild"];
 
 const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 
@@ -53,13 +51,15 @@ bot.on('message', message => {
             break;
 
             case "help":
-                message.channel.send("Commands: meme, help, hi");
+                message.channel.send("Commands: _meme, _help, _hi, _ban");
             break;
 
             // fix banning its not getting the command
             case "ban": 
                 const banUser = message.mentions.users.first();
                 const banMessage = args[2];
+
+                if (banUser.username == null) { message.channel.send("Please Enter a username."); return; }
 
                 if (message.author.username === mods) {
                     message.guild.member(banUser).ban(banMessage).then(() => {
@@ -108,6 +108,12 @@ bot.on('guildMemberAdd', member => {
 
 bot.on('ready', () => {
     console.log('ready');
+    bot.user.setPresence({
+        game: {
+            name: "_help",
+            type: 3
+        }
+    })
 });
 
 bot.login(process.env.TOKEN);
