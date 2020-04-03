@@ -6,7 +6,7 @@ const firebase = require('firebase');
 
 let bot = new discord.Client();
 const prefix = '_';
-const Botlogo = bot.user.avatarURL;
+const Botlogo = "https://cdn.discordapp.com/app-icons/632687408793780275/4885fa093e2c818de8b830d1a6cf857b.png";
 
 firebase.initializeApp({
     apiKey: "AIzaSyACX60OfX5FE3T6Kr1kBw_lZqqILu8DYmM",
