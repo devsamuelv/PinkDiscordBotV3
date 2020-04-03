@@ -6,6 +6,7 @@ const firebase = require('firebase');
 
 let bot = new discord.Client();
 const prefix = '_';
+const Botlogo = bot.user.avatarURL;
 
 firebase.initializeApp({
     apiKey: "AIzaSyACX60OfX5FE3T6Kr1kBw_lZqqILu8DYmM",
@@ -35,6 +36,8 @@ const mods = ["Developer", "Bradley", "Dr0verbuild"];
 
 const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 
+
+// for commands and moderation
 bot.on('message', message => {
     const args = message.content.substr(prefix.length).split(' ');
 
@@ -42,20 +45,20 @@ bot.on('message', message => {
         message.channel.delete();
     }
 
-    try { 
+    try {
         // put all messages in the try function to catch errors
 
         switch (args[0]) {
             case "meme":
                 message.channel.send("Sending Memes");
-            break;
+                break;
 
             case "help":
                 message.channel.send("Commands: _meme, _help, _hi, _ban");
-            break;
+                break;
 
-            // fix banning its not getting the command
-            case "ban": 
+                // fix banning its not getting the command
+            case "ban":
                 const banUser = message.mentions.users.first();
                 const banMessage = args[2];
 
@@ -69,12 +72,12 @@ bot.on('message', message => {
                     })
                 }
 
-            break;
+                break;
 
             case "hi":
                 const author = message.author.username;
                 message.channel.send(`Hello ${author}`);
-            break;
+                break;
         }
 
         if (message.author.username == "Diamonddunkers") {
@@ -95,6 +98,25 @@ bot.on('message', message => {
         // nothing here
     }
 });
+
+
+bot.on('message', message => {
+    const content = message.content.toLowerCase();
+
+    if (content.includes("when is game night")) {
+        const gameNightEmbed = new discord.RichEmbed({
+            author: {
+                name: "Pinky",
+                icon_url: Botlogo
+            },
+            title: "Game Night Info",
+            description: "⌚Game Night is on Fridays At 7pm⌚",
+            color: 11111111
+        })
+        message.channel.send(gameNightEmbed);
+    }
+})
+
 
 bot.on('guildMemberAdd', member => {
     const channel = member.guild.channels.find(ch => {
