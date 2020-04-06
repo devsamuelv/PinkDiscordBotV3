@@ -1,8 +1,10 @@
 let discord = require('discord.js');
-var fs = require('fs');
-require('dotenv').config();
+const fs = require('fs');
 const firebase = require('firebase');
-// require('http').createServer().listen(3000); // only for api's the require a port num
+const http = require('http');
+const os = require("os");
+const systemInfo = require("systeminformation");
+require('dotenv').config();
 
 let bot = new discord.Client();
 const prefix = '_';
@@ -18,24 +20,12 @@ firebase.initializeApp({
     appId: "1:542368478810:web:987f2ae3e30515c64fca63"
 });
 
-var firestore = firebase.firestore();
-
-var configCollection = firestore.collection('config');
-var doc = firestore.collection('/config').doc('/0PLo2AWvg2UGwfFMTK2U');
-
-// doc.onSnapshot(async function(doc) {
-//     await bot.user.setPresence({
-//         game: {
-//             name: doc.data().statName,
-//             type: doc.data().statNumber,
-//         }
-//     })
-// })
+const firestore = firebase.firestore();
+const sysCollection = firestore.collection("sys");
 
 const mods = ["Developer", "Bradley", "Dr0verbuild"];
 
 const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
-
 
 // for commands and moderation
 bot.on('message', message => {
@@ -50,6 +40,7 @@ bot.on('message', message => {
 
         switch (args[0]) {
             case "meme":
+                // work on this later
                 message.channel.send("Sending Memes");
                 break;
 
@@ -64,12 +55,23 @@ bot.on('message', message => {
 
                 if (banUser.username == null) { message.channel.send("Please Enter a username."); return; }
 
-                if (message.author.username === mods) {
+                if (message.member.roles.some(roles => roles.name === "Moderator")) {
                     message.guild.member(banUser).ban(banMessage).then(() => {
                         message.channel.send(`the user ${banUser} was banned`);
                     }).catch((err) => {
                         message.channel.send(`Error User Not Banned ${err}`);
                     })
+                } else {
+                    const errEmbed = new discord.RichEmbed({
+                        author: {
+                            name: "Pinky",
+                            icon_url: Botlogo
+                        },
+                        title: "Incorrect Permissions",
+                        description: "Im Sorry you dont have Moderator Permissions",
+                        color: 11111111
+                    })
+                    message.channel.send(errEmbed);
                 }
 
                 break;
@@ -87,15 +89,64 @@ bot.on('message', message => {
                 console.log(message.content);
             }
         } else {
-            console.log('\033[49m');
+            // console.log('\033[49m');
 
             console.log('\033[31m');
             const spacer = "=============================================";
             console.log(`${new Date} \n ` + '\033[34m' + `${message.author.username}` + '\033[39m' + ` is not blacklisted \n${spacer}`);
             console.log('\033[39m');
+
+            var data2;
+
+            fs.readFile("./backend/logs.txt", (err, data) => {
+
+                if (err) {
+                    return console.log(err);
+                }
+
+                sysCollection.doc("temp").get().then(payload => {
+                    const data2 = `${new Date} ${message.author.username} is not blacklisted \n` + payload.data().log;
+
+                    const dataFile = {
+                        log: data2,
+                        sysname: os.platform(),
+                    }
+
+                    sysCollection.doc('temp').set(dataFile, { merge: true });
+                })
+            })
+
+            fs.writeFile("./backend/logs.txt", data2, (err) => {
+                if (err) {
+                    return console.log(err);
+                }
+            })
+
+            // var cpu;
+            // var ram;
+            // var sysname;
+
+            // systemInfo.cpuTemperature().then((data) => {
+            //     cpu = data;
+            // })
+
+            // systemInfo.mem().then((data) => {
+            //     ram = data;
+            // })
+
+            // systemInfo.system().then((data) => {
+            //     sysname = data;
+            // })
+
+            const datainfo = {
+                log: data2,
+            }
+
+            // sysCollection.doc("temp").set(datainfo, { merge: true });
         }
     } catch (err) {
         // nothing here
+        console.log(err);
     }
 });
 
@@ -117,10 +168,9 @@ bot.on('message', message => {
     }
 })
 
-
 bot.on('guildMemberAdd', member => {
     const channel = member.guild.channels.find(ch => {
-        ch.name === 'system-messages'
+        ch.name === "system-messages"
     });
 
     if (!channel) { return; }
@@ -130,10 +180,44 @@ bot.on('guildMemberAdd', member => {
 
 bot.on('ready', () => {
     console.log('ready');
+    var htmlFile;
+    var cssFile;
+    var jsfile;
+
+    fs.readFile("./public/index.html", (err, data) => {
+        htmlFile = data;
+    })
+
+    fs.readFile("./public/index.css", (err, data) => {
+        cssFile = data;
+    })
+
+    fs.readFile("./public/index.js", (err, data) => {
+        jsfile = data;
+    })
+
+    http.createServer(function(req, res) {
+
+        switch (req.url) {
+            // server is working
+            case "/admin":
+                res.write("index.css");
+                res.end();
+                break;
+
+
+            default:
+                res.write(htmlFile);
+                res.end();
+                break;
+        }
+
+    }).listen(8080); //the server object listens on port 8080
+
     bot.user.setPresence({
         game: {
             name: "_help",
-            type: 3
+            type: 2
         }
     })
 });

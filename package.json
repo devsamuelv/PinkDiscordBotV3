@@ -11,6 +11,8 @@
     "dependencies": {
         "discord.js": "^11.5.1",
         "dotenv": "^8.2.0",
-        "firebase": "^7.9.2"
+        "firebase": "^7.9.2",
+        "os": "^0.1.1",
+        "systeminformation": "^4.23.1"
     }
 }
