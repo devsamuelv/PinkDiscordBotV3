@@ -1,5 +1,6 @@
 import * as discord from 'discord.js';
 import * as varibles from './varibles';
+// ? import * as functions from './functions';
 
 export const ErrEmbed = new discord.RichEmbed({
     author: {
@@ -20,3 +21,7 @@ export const gameNightEmbed = new discord.RichEmbed({
     description: "⌚Game Night is on Fridays At 7pm⌚",
     color: 11111111
 });
+
+export const gameNightPoll = new discord.RichEmbed({
+    title: "Game Night"
+})
