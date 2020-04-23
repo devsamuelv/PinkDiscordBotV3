@@ -38,48 +38,46 @@ const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 
 // for commands and moderation
 bot.on('message', message => {
-    if (init == true) {
-        schedule.scheduleJob('* 59 17 * * *', () => {
-            console.log(message.guild.roles);
-            const test =
-                `${message.guild.roles.get(varibles.GameNight)} Ok people its game night once again! I am taking Jackbox games out of the vote because, well, its the best game and we play it every time so it will now be a guaranteed game each week for now on unless otherwise stated ${printEmoji(varibles.Jackbox)} . \n`
+    // if (init == true) {
+    //     schedule.scheduleJob('* 59 22 * * *', () => {
+    //         console.log(message.guild.roles);
+    //         const test =
+    //             `${message.guild.roles.get(varibles.GameNight)} Ok people its game night once again! I am taking Jackbox games out of the vote because, well, its the best game and we play it every time so it will now be a guaranteed game each week for now on unless otherwise stated ${printEmoji(varibles.Jackbox)} . \n`
 
-            +"\n" +
-            "We are also setting an official time for Jackbox games to have our family friendly policy lifted each night. We will all play under the same name and not give hints as to who is playing until after each game is done, so people that play will not play under any pressure or judgment. This time will start at 9:30 PM unless otherwise stated. \n"
+    //         +"\n" +
+    //         "We are also setting an official time for Jackbox games to have our family friendly policy lifted each night. We will all play under the same name and not give hints as to who is playing until after each game is done, so people that play will not play under any pressure or judgment. This time will start at 9:30 PM unless otherwise stated. \n"
 
-            +
-            "\n" +
-            "When you get a chance, please vote for the other games we will be playing tomorrow! Remember, Jackbox games are going to be played anyways unless the majority does not want to play. \n"
+    //         +
+    //         "\n" +
+    //         "When you get a chance, please vote for the other games we will be playing tomorrow! Remember, Jackbox games are going to be played anyways unless the majority does not want to play. \n"
 
-            +
-            "\n" +
-            `- Minecraft Java/Bedrock ${printEmoji(varibles.GrassBlock)} \n` +
+    //         +
+    //         "\n" +
+    //         `- Minecraft Java/Bedrock ${printEmoji(varibles.GrassBlock)} \n` +
 
-            `- Roblox ${printEmoji(varibles.Roblox)} \n` +
+    //         `- Roblox ${printEmoji(varibles.Roblox)} \n` +
 
-            `- Super Smash Bros. Ultimate ${printEmoji(varibles.Smash)} \n` +
+    //         `- Super Smash Bros. Ultimate ${printEmoji(varibles.Smash)} \n` +
 
-            `- Fortnite. ${printEmoji(varibles.Fortnite)} \n` +
-            "\n" +
+    //         `- Fortnite. ${printEmoji(varibles.Fortnite)} \n` +
+    //         "\n" +
 
-            "If you have game suggestions DM a moderator. \n"
+    //         "If you have game suggestions DM a moderator. \n"
 
-            +
-            "\n" +
-            "Voting ends at 6:30 PM tomorrow! **NOTE: any reaction that is not stated above will not count.** \n";
+    //         +
+    //         "\n" +
+    //         "Voting ends at 6:30 PM tomorrow! **NOTE: any reaction that is not stated above will not count.** \n";
 
-            // ! this only works on the pink team server
-            const sendChannel = message.member.guild.channels.get(varibles.testingChannelID);
-            sendChannel.send(test).then(msg => {
-                msg.react(printEmoji(varibles.Roblox));
-                msg.react(printEmoji(varibles.Fortnite));
-                msg.react(printEmoji(varibles.GrassBlock));
-                msg.react(printEmoji(varibles.Smash));
-            })
-        })
-
-        init = false;
-    }
+    //         // ! this only works on the pink team server
+    //         const sendChannel = message.member.guild.channels.get(varibles.testingChannelID);
+    //         sendChannel.send(test).then(msg => {
+    //             msg.react(printEmoji(varibles.Roblox));
+    //             msg.react(printEmoji(varibles.Fortnite));
+    //             msg.react(printEmoji(varibles.GrassBlock));
+    //             msg.react(printEmoji(varibles.Smash));
+    //         })
+    //     })
+    // }
 
     const args = message.content.substr(prefix.length).split(' ');
 
@@ -133,14 +131,13 @@ bot.on('message', message => {
             case 'game-night':
                 console.log(message.guild.roles);
                 const test =
-                    `${message.guild.roles.get(varibles.GameNight)} Ok people its game night once again! I am taking Jackbox games out of the vote because, well, its the best game and we play it every time so it will now be a guaranteed game each week for now on unless otherwise stated ${printEmoji(varibles.Jackbox)} . \n`
+                    `${message.guild.roles.get(varibles.GameNight)} When you get a chance, please vote for the other games we will be playing. \n`
 
                 +"\n" +
-                "We are also setting an official time for Jackbox games to have our family friendly policy lifted each night. We will all play under the same name and not give hints as to who is playing until after each game is done, so people that play will not play under any pressure or judgment. This time will start at 9:30 PM unless otherwise stated. \n"
+                "Remember, Jackbox games are going to be played anyways unless \n"
 
                 +
-                "\n" +
-                "When you get a chance, please vote for the other games we will be playing tomorrow! Remember, Jackbox games are going to be played anyways unless the majority does not want to play. \n"
+                `the majority does not want to play. ${printEmoji(varibles.Jackbox)} \n`
 
                 +
                 "\n" +
@@ -157,40 +154,29 @@ bot.on('message', message => {
 
                 +
                 "\n" +
-                "Voting ends at 6:30 PM tomorrow! **NOTE: any reaction that is not stated above will not count.** \n";
+                "Voting ends at 6:30 PM! **NOTE: any reaction that is not stated above will not count.** \n";
 
                 // ! this only works on the pink team server
-                const sendChannel = message.member.guild.channels.get(varibles.testingChannelID);
+                const sendChannel = message.member.guild.channels.get(varibles.TestServerTestChannelID);
                 sendChannel.send(test).then(msg => {
                     msg.react(printEmoji(varibles.Roblox));
                     msg.react(printEmoji(varibles.Fortnite));
                     msg.react(printEmoji(varibles.GrassBlock));
                     msg.react(printEmoji(varibles.Smash));
+                    msg.react(printEmoji(varibles.ElonMusk));
                 })
 
 
                 break;
 
-            case "test-emoji":
-                console.log(bot.emojis)
-                message.channel.send(`${printEmoji(varibles.Fortnite)}, ${printEmoji(varibles.GrassBlock)}, ${printEmoji(varibles.Smash)}, ${printEmoji(varibles.Roblox)}`);
-
+            case 'poll':
+                const output = args.slice(1).join("");
+                message.channel.send(output).then(msg => {
+                    msg.react("👍");
+                    msg.react("👎");
+                    msg.react("⚡")
+                })
                 break;
-
-                // // * this is in development
-                // // case 'spamm':
-                // //     const MentionedUser = message.mentions.users.first();
-                // //     const message = args[2];
-
-                // //     if (MentionedUser == null) { message.channel.send("Please Mention a user."); return; }
-
-                // //     for (var x = 0; x > 5; x++) {
-                // //         console.log(message);
-                // //     }
-
-
-
-                // //     break;
 
 
             case "hi":
