@@ -1,9 +1,7 @@
 # Pinky
 
-- *Bugs*
-    - Message Censoring
-
 ### Upcomming Features
+- [ ] Add Message Censoring
 - [X] Add Game Night Commands
 - [ ] Add User Spamming
 - [ ] Add Poll
