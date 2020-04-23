@@ -3,10 +3,9 @@ const varibles = require('./backend/ts/varibles');
 
 // * get dependency's
 const fs = require('fs');
-const firebase = require('firebase');
 const http = require('http');
-const os = require("os");
-const schedule = require('node-schedule');
+// const os = require("os");
+// const schedule = require('node-schedule');
 
 var init = true;
 
@@ -17,22 +16,7 @@ const { PrintEmoji } = require('./backend/ts/functions');
 let bot = new discord.Client();
 const prefix = '_';
 
-firebase.initializeApp({
-    apiKey: "AIzaSyACX60OfX5FE3T6Kr1kBw_lZqqILu8DYmM",
-    authDomain: "pinkteamb.firebaseapp.com",
-    databaseURL: "https://pinkteamb.firebaseio.com",
-    projectId: "pinkteamb",
-    storageBucket: "pinkteamb.appspot.com",
-    messagingSenderId: "542368478810",
-    appId: "1:542368478810:web:987f2ae3e30515c64fca63"
-});
 // ? 14 for 2 
-
-// TODO add a spam function
-
-// * firestore stuff
-const firestore = firebase.firestore();
-const sysCollection = firestore.collection("sys");
 
 const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 
@@ -206,17 +190,6 @@ bot.on('message', message => {
                 if (err) {
                     return console.log(err);
                 }
-
-                sysCollection.doc("temp").get().then(payload => {
-                    const log = payload.data().log;
-
-                    const dataFile = {
-                        log: log + 1,
-                        sysname: os.platform(),
-                    }
-
-                    sysCollection.doc('temp').set(dataFile, { merge: true });
-                })
             })
 
             fs.writeFile("./backend/logs.txt", data2, (err) => {
@@ -269,7 +242,7 @@ bot.on('ready', () => {
 
         switch (req.url) {
             // server is working
-            case "/isup":
+            case "/isrunning":
                 res.write("Server is Running");
                 res.end();
                 break;
@@ -292,7 +265,6 @@ bot.on('ready', () => {
 });
 
 bot.login(process.env.TOKEN);
-
 
 // * functions here 
 function printEmoji(ID) {

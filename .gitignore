@@ -1,7 +1,4 @@
 node_modules/
-
-log.txt
 .env
-.gitignore
 .vscode
 .vs
