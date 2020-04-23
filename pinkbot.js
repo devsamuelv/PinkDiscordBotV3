@@ -140,7 +140,7 @@ bot.on('message', message => {
                 "Voting ends at 6:30 PM! **NOTE: any reaction that is not stated above will not count.** \n";
 
                 // ! this only works on the pink team server
-                const sendChannel = message.member.guild.channels.get(varibles.TestServerTestChannelID);
+                const sendChannel = message.member.guild.channels.get(varibles.testingChannelID);
                 sendChannel.send(test).then(msg => {
                     msg.react(printEmoji(varibles.Roblox));
                     msg.react(printEmoji(varibles.Fortnite));
