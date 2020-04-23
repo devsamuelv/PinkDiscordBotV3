@@ -12,7 +12,6 @@ var init = true;
 require('dotenv').config();
 
 let discord = require('discord.js');
-const { PrintEmoji } = require('./backend/ts/functions');
 let bot = new discord.Client();
 const prefix = '_';
 
