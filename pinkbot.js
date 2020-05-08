@@ -77,7 +77,7 @@ bot.on('message', message => {
                 break;
 
             case "help":
-                message.channel.send("Commands: _meme, _help, _hi, _ban");
+                message.channel.send("Commands: _meme, _help, _hi, _ban, _update-emoji");
                 break;
 
                 // ! fix banning its not getting the command
@@ -131,6 +131,8 @@ bot.on('message', message => {
                 `- Super Smash Bros. Ultimate ${printEmoji(varibles.Smash)} \n` +
 
                 `- Fortnite. ${printEmoji(varibles.Fortnite)} \n` +
+
+                `- Mario Cart 8. ${printEmoji(varibles.MK8D)} \n` +
                 "\n" +
 
                 "If you have game suggestions DM a moderator. \n"
@@ -147,17 +149,20 @@ bot.on('message', message => {
                     msg.react(printEmoji(varibles.GrassBlock));
                     msg.react(printEmoji(varibles.Smash));
                     msg.react(printEmoji(varibles.ElonMusk));
+                    msg.react(printEmoji(varibles.MK8D));
+                    msg.react(printEmoji(varibles.TROLL))
                 })
 
 
                 break;
 
             case 'poll':
-                const output = args.slice(1).join("");
-                message.channel.send(output).then(msg => {
+                const output = args.slice(1).join(" ");
+                message.channel.send("" + `**From**: ${message.author.username} ` + output + "").then(msg => {
                     msg.react("👍");
                     msg.react("👎");
-                    msg.react("⚡")
+                    msg.react("⚡");
+                    msg.react(printEmoji(varibles.ElonMusk));
                 })
                 break;
 
@@ -165,6 +170,18 @@ bot.on('message', message => {
             case "hi":
                 const author = message.author.username;
                 message.channel.send(`Hello ${author}`);
+                break;
+
+            case 'update-emoji':
+                fs.writeFile('./emojis.json', JSON.stringify(bot.emojis.array().toString()), (err) => {
+                    if (err) {
+                        console.error(err);
+                        message.channel.send("```Emojis Updated Failed```");
+                    } else {
+                        message.channel.send("```Emojis Updated Successfully```");
+                    }
+                })
+                message.channel.send("``` " + JSON.stringify(bot.emojis.array().toString()) + " ```");
                 break;
         }
 

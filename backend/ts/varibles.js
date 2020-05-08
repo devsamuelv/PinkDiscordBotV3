@@ -13,5 +13,7 @@ exports.Roblox = "693100613227118623";
 exports.Fortnite = "700166603093966871";
 exports.Jackbox = "693122355765182464";
 exports.ElonMusk = "687871154333024292";
+exports.MK8D = "693107313325768814";
+exports.TROLL = "690753532898443286";
 // * Role ID's
 exports.GameNight = "690685361910972426";

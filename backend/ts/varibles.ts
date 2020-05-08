@@ -13,6 +13,8 @@ export const Roblox = "693100613227118623";
 export const Fortnite = "700166603093966871";
 export const Jackbox = "693122355765182464";
 export const ElonMusk = "687871154333024292";
+export const MK8D = "693107313325768814";
+export const TROLL = "690753532898443286";
 
 // * Role ID's
 export const GameNight = "690685361910972426";
