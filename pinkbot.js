@@ -270,7 +270,7 @@ bot.on('ready', () => {
                 break;
         }
 
-    }).listen(8080); //the server object listens on port 8080
+    }).listen(4040); //the server object listens on port 4040
 
     bot.user.setPresence({
         game: {
