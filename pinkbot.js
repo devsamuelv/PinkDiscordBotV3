@@ -114,43 +114,50 @@ bot.on('message', message => {
             case 'game-night':
                 console.log(message.guild.roles);
                 const test =
-                    `${message.guild.roles.get(varibles.GameNight)} When you get a chance, please vote for the other games we will be playing. \n`
+                    `${message.guild.roles.get(varibles.GameNight)} Alright, its time to vote for this week's Game Night! Please, vote for the games you want to play! Also, please only vote if you will play said game(s)! We have had people messing up the vote because they don't play but vote anyways, and it is hard to decide what to do. \n`
 
                 +"\n" +
-                "Remember, Jackbox games are going to be played anyways unless \n"
+                "**Please note:** Jackbox games will be played every week unless the majority does not want to play. \n"
 
                 +
-                `the majority does not want to play. ${printEmoji(varibles.Jackbox)} \n`
-
-                +
-                "\n" +
-                `- Minecraft Java/Bedrock ${printEmoji(varibles.GrassBlock)} \n` +
-
-                `- Roblox ${printEmoji(varibles.Roblox)} \n` +
-
-                `- Super Smash Bros. Ultimate ${printEmoji(varibles.Smash)} \n` +
-
-                `- Fortnite. ${printEmoji(varibles.Fortnite)} \n` +
-
-                `- Mario Cart 8. ${printEmoji(varibles.MK8D)} \n` +
-                "\n" +
-
-                "If you have game suggestions DM a moderator. \n"
+                `If you do not want to play any Jackbox games, please vote with ${printEmoji(varibles.Jackbox)} \n`
 
                 +
                 "\n" +
-                "Voting ends at 6:30 PM! **NOTE: any reaction that is not stated above will not count.** \n";
+                `**1) Animal Crossing: New Horizons -** ${printEmoji(varibles.AnimalCrossing)} \n` +
+                `**2) Brawlhalla -** ${printEmoji(varibles.BrawlHalla)} \n` +
+                `**3) Fortnite -** ${printEmoji(varibles.Fortnite)} \n` +
+                `**4) osu! -** ${printEmoji(varibles.OSU)} \n` +
+                `**5) Minecraft Bedrock Edition -**  ${printEmoji(varibles.GrassBlock)} \n` +
+                `**6) Minecraft Java Edition -** ${printEmoji(varibles.Diamond)} \n` +
+                `**7) Roblox -** ${printEmoji(varibles.Roblox)} \n` +
+                `**8) Splatoon 2 -** ${printEmoji(varibles.SplatToon2)} \n` +
+                `**9) Starcraft II - **${printEmoji(varibles.SC2)} \n` +
+                `**10) Super Mario Kart 8 Deluxe -** ${printEmoji(varibles.MK8D)} \n` +
+                `**11) Super Smash Bros. Ultimate -** ${printEmoji(varibles.Smash)} \n` +
+                "\n" +
+
+                "**NOTE: any reaction that is not stated above will not count.\n**" +
+                "\n" +
+                "Voting ends at 6:30 PM and Game Night starts at 7:00PM! If you have game suggestions DM a moderator \n";
 
                 // ! this only works on the pink team server
                 const sendChannel = message.member.guild.channels.get(varibles.annoucmentChannelID);
                 sendChannel.send(test).then(msg => {
-                    msg.react(printEmoji(varibles.Roblox));
-                    msg.react(printEmoji(varibles.Fortnite));
-                    msg.react(printEmoji(varibles.GrassBlock));
-                    msg.react(printEmoji(varibles.Smash));
-                    msg.react(printEmoji(varibles.ElonMusk));
-                    msg.react(printEmoji(varibles.MK8D));
-                    msg.react(printEmoji(varibles.TROLL))
+                    msg.react(varibles.AnimalCrossing);
+                    msg.react(varibles.BrawlHalla);
+                    msg.react(varibles.Fortnite);
+                    msg.react(varibles.OSU);
+                    msg.react(varibles.GrassBlock);
+                    msg.react(varibles.Diamond);
+                    msg.react(varibles.Roblox);
+                    msg.react(varibles.SplatToon2);
+                    msg.react(varibles.SC2);
+                    msg.react(varibles.MK8D);
+                    msg.react(varibles.Smash);
+                    msg.react(varibles.Jackbox);
+                    msg.react(varibles.ElonMusk);
+                    msg.react(varibles.TrueYoov);
                 })
 
 
