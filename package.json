@@ -4,6 +4,7 @@
     "description": "",
     "main": "pinkbot.js",
     "scripts": {
+        "start": "tsc -w",
         "build": "node pinkbot.js build"
     },
     "author": "",

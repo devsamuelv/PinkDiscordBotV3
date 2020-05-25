@@ -22,5 +22,25 @@ exports.OSU = "708824945202954272";
 exports.SplatToon2 = "708822092505939978";
 exports.SC2 = "693100182312845393";
 exports.TrueYoov = "690036046125203458";
+exports.Confucius = "714262675978321960";
+exports.PinkDozer = "688130232703778866";
 // * Role ID's
 exports.GameNight = "690685361910972426";
+// * Memes
+exports.Memes = [
+    exports.GrassBlock,
+    exports.TROLL,
+    exports.ElonMusk,
+    exports.TrueYoov,
+    exports.Confucius,
+    exports.BrawlHalla,
+    exports.Roblox,
+    exports.Diamond,
+    exports.Diamond,
+    exports.Diamond,
+    exports.ElonMusk,
+    exports.ElonMusk,
+    exports.PinkDozer,
+    exports.PinkDozer,
+    exports.PinkDozer
+];

@@ -22,6 +22,27 @@ export const OSU = "708824945202954272";
 export const SplatToon2 = "708822092505939978";
 export const SC2 = "693100182312845393";
 export const TrueYoov = "690036046125203458";
+export const Confucius = "714262675978321960";
+export const PinkDozer = "688130232703778866";
 
 // * Role ID's
 export const GameNight = "690685361910972426";
+
+// * Memes
+export const Memes = [
+    GrassBlock,
+    TROLL,
+    ElonMusk,
+    TrueYoov,
+    Confucius,
+    BrawlHalla,
+    Roblox,
+    Diamond,
+    Diamond,
+    Diamond,
+    ElonMusk,
+    ElonMusk,
+    PinkDozer,
+    PinkDozer,
+    PinkDozer
+]

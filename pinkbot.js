@@ -74,6 +74,11 @@ bot.on('message', message => {
             case "meme":
                 // todo work on this later
                 message.channel.send("Sending Memes");
+
+                for (var i = 0; i != 14; i++) {
+                    message.channel.send("**MEME:**" + printEmoji(varibles.Memes[i]));
+                }
+
                 break;
 
             case "help":
@@ -98,17 +103,6 @@ bot.on('message', message => {
                 }
 
                 break;
-
-                //     // * this is only for game night finish announcement
-                // case 'voting-finish':
-                //     var myArgs = args.slice(1).join(" ");
-                //     const sendChannel2 = message.member.guild.channels.get(varibles.annoucmentChannelID);
-
-                //     const content =
-                //         "@everyone voting is now over so tonight we are playing " + myArgs;
-
-                //     sendChannel2.send(content);
-                //     break;
 
 
             case 'game-night':
@@ -165,7 +159,7 @@ bot.on('message', message => {
 
             case 'poll':
                 const output = args.slice(1).join(" ");
-                message.channel.send("" + `**From**: ${message.author.username} ` + output + "").then(msg => {
+                message.channel.send("" + `**From: ${message.author.username} **` + output + "").then(msg => {
                     msg.react("👍");
                     msg.react("👎");
                     msg.react("⚡");
@@ -205,22 +199,6 @@ bot.on('message', message => {
             const spacer = "=============================================";
             console.log(`${new Date} \n ` + '\033[34m' + `${message.author.username}` + '\033[39m' + ` is not blacklisted \n${spacer}`);
             console.log('\033[39m');
-
-            var data2;
-
-            fs.readFile("./backend/logs.txt", (err, data) => {
-
-                if (err) {
-                    return console.log(err);
-                }
-            })
-
-            fs.writeFile("./backend/logs.txt", data2, (err) => {
-                if (err) {
-                    return console.log(err);
-                }
-            })
-
         }
     } catch (err) {
         // nothing here
@@ -239,6 +217,8 @@ bot.on('guildMemberAdd', member => {
     const channel = member.guild.channels.find(ch => {
         ch.name === "system-messages"
     });
+
+    console.log(channel);
 
     if (!channel) { return; }
 
