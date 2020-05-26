@@ -72,7 +72,6 @@ bot.on('message', message => {
         // put all messages in the try function to catch errors
         switch (args[0]) {
             case "meme":
-                // todo work on this later
                 message.channel.send("Sending Memes");
 
                 for (var i = 0; i != 14; i++) {
