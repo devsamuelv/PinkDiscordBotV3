@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pink Bot Server</title>
+
+    <link rel="stylesheet" type="text/css" href="Semantic-UI-CSS-master/semantic.min.css">
+</head>
+
+<body>
+    <div class="header">
+        <img style="height: 90px; margin-top: 1vh; margin-left: 1vw;" src="https://cdn.discordapp.com/app-icons/632687408793780275/4885fa093e2c818de8b830d1a6cf857b.png" alt="pink logo">
+
+        <!-- <button class="ui button">Follow</button> -->
+
+        <!-- <div class="ui label">
+            <i class="fire icon"></i><label class="temp-cpu">23 F</label>
+        </div> -->
+    </div>
+
+    <!-- <div class="ui statistics stat">
+        <div class="statistic">
+            <div class="value">
+                <i class="computer icon"></i><label class="mem"></label>
+            </div>
+            <div class="label">
+                Memory Used
+            </div>
+        </div>
+        <div class="statistic">
+            <div class="value">
+                <i class="fire icon"></i><label class="cpu"></label>
+            </div>
+            <div class="label">
+                Cpu Temp
+            </div>
+        </div>
+    </div> -->
+
+    <div>
+        <h3 style="text-align: center; margin-top: 5vh;">System Logs</h3>
+        <p style="text-align: center; margin-top: 2vh;" class="output logs"></p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="Semantic-UI-CSS-master/semantic.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.13.2/firebase-firestore.js"></script>
+</body>
+
+</html>
+
+<script>
+    // var cpu_temp = document.getElementsByClassName("cpu");
+    // var ram_space = document.getElementsByClassName("mem");
+    var ouput = document.getElementsByClassName("output");
+
+    const debug = false;
+
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyACX60OfX5FE3T6Kr1kBw_lZqqILu8DYmM",
+        authDomain: "pinkteamb.firebaseapp.com",
+        databaseURL: "https://pinkteamb.firebaseio.com",
+        projectId: "pinkteamb",
+        storageBucket: "pinkteamb.appspot.com",
+        messagingSenderId: "542368478810",
+        appId: "1:542368478810:web:12d7c7b221cd7aa54fca63"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    const firestore = firebase.firestore();
+
+    const sysCollection = firestore.collection("sys");
+
+    sysCollection.doc("temp").onSnapshot((snap) => {
+        // cpu_temp.item(0).innerHTML = snap.data().cpu;
+        // if (debug) {
+        //     console.log(snap.data().cpu);
+        // }
+
+        // ram_space.item(0).innerHTML = snap.data().ram;
+        // if (debug) {
+        //     console.log(snap.data().ram);
+        // }
+
+        ouput.item(0).innerHTML = snap.data().log;
+        if (debug) {
+            console.log(snap.data().log);
+        }
+    })
+</script>
+
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .header {
+        background-color: #FF69B4;
+        height: 110px;
+        display: flexbox;
+    }
+    
+    .output {
+        line-height: 25px;
+        font-family: monospace;
+    }
+    
+    .stat {
+        padding-left: 37vw;
+        padding-right: 36vw;
+    }
+    
+    .title {
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 45px;
+        left: 15px;
+        padding-top: 2px;
+    }
+</style>
