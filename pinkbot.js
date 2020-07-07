@@ -6,7 +6,9 @@ const ytScraper = require("yt-scraper");
 // * get dependency's
 const fs = require('fs');
 const http = require('http');
-const puppeteer = require('puppeteer');
+
+const emoji = require('./emojis.json');
+
 // const os = require("os");
 // const schedule = require('node-schedule');
 
@@ -31,47 +33,6 @@ var songs = {
 
 // for commands and moderation
 bot.on('message', message => {
-    // if (init == true) {
-    //     schedule.scheduleJob('* 59 22 * * *', () => {
-    //         console.log(message.guild.roles);
-    //         const test =
-    //             `${message.guild.roles.get(varibles.GameNight)} Ok people its game night once again! I am taking Jackbox games out of the vote because, well, its the best game and we play it every time so it will now be a guaranteed game each week for now on unless otherwise stated ${printEmoji(varibles.Jackbox)} . \n`
-
-    //         +"\n" +
-    //         "We are also setting an official time for Jackbox games to have our family friendly policy lifted each night. We will all play under the same name and not give hints as to who is playing until after each game is done, so people that play will not play under any pressure or judgment. This time will start at 9:30 PM unless otherwise stated. \n"
-
-    //         +
-    //         "\n" +
-    //         "When you get a chance, please vote for the other games we will be playing tomorrow! Remember, Jackbox games are going to be played anyways unless the majority does not want to play. \n"
-
-    //         +
-    //         "\n" +
-    //         `- Minecraft Java/Bedrock ${printEmoji(varibles.GrassBlock)} \n` +
-
-    //         `- Roblox ${printEmoji(varibles.Roblox)} \n` +
-
-    //         `- Super Smash Bros. Ultimate ${printEmoji(varibles.Smash)} \n` +
-
-    //         `- Fortnite. ${printEmoji(varibles.Fortnite)} \n` +
-    //         "\n" +
-
-    //         "If you have game suggestions DM a moderator. \n"
-
-    //         +
-    //         "\n" +
-    //         "Voting ends at 6:30 PM tomorrow! **NOTE: any reaction that is not stated above will not count.** \n";
-
-    //         // ! this only works on the pink team server
-    //         const sendChannel = message.member.guild.channels.get(varibles.testingChannelID);
-    //         sendChannel.send(test).then(msg => {
-    //             msg.react(printEmoji(varibles.Roblox));
-    //             msg.react(printEmoji(varibles.Fortnite));
-    //             msg.react(printEmoji(varibles.GrassBlock));
-    //             msg.react(printEmoji(varibles.Smash));
-    //         })
-    //     })
-    // }
-
     const args = message.content.substr(prefix.length).split(' ');
 
     if (message.content.includes(badnames)) {
@@ -87,7 +48,7 @@ bot.on('message', message => {
                 break;
 
             case "help":
-                message.channel.send("Commands: _meme, _help, _hi, _ban, _update-emoji, _bass-boost <url> <boost level>");
+                message.channel.send("Commands: _meme, _help, _hi, _ban, _update-emoji, _bass-boost <url> <boost level>, disconnect");
                 break;
 
                 // ! fix banning its not getting the command
@@ -190,6 +151,10 @@ bot.on('message', message => {
                 // })
                 break;
 
+            case 'test':
+                printEmoji('shanePog');
+                break;
+
             case 'play', 'p':
                 const url = args[1];
 
@@ -225,6 +190,18 @@ bot.on('message', message => {
                 console.log(url);
                 break;
 
+            case 'disconnect':
+                const channelName = message.member.voiceChannel.name;
+
+                bot.voiceConnections.forEach((channel) => {
+                    if (channel.channel.name == channelName) {
+                        channel.disconnect();
+
+                        message.channel.send("Disconnected From " + channelName);
+                    }
+                })
+                break;
+
             case 'bass-boost', 'boost', 'bass':
                 const url2 = args[1];
                 const vol = args[2];
@@ -254,7 +231,7 @@ bot.on('message', message => {
 
                 setTimeout(() => {
                     songs.queue.shift();
-                }, dispatcher.streamTime);
+                }, dispatcher3.streamTime);
 
                 console.log(url2);
                 break;
@@ -375,5 +352,6 @@ bot.login(process.env.TOKEN);
 
 // * functions here 
 function printEmoji(Name) {
+    // todo add emoji id retreve with json
     return bot.emojis.cache.get(Name);
 }
