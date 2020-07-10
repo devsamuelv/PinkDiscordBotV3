@@ -174,6 +174,11 @@ bot.on('message', message => {
             case 'play', 'p':
                 const url = args[1];
 
+                if (url == null) {
+                    message.channel.send('⛔ Please link a url ⛔');
+                    return;
+                }
+
                 songs.queue.push(url);
 
                 if (!message.member.voiceChannel) {
