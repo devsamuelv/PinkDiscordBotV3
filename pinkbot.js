@@ -16,8 +16,8 @@ var init = true;
 
 require('dotenv').config();
 
-let discord = require('discord.js');
-let bot = new discord.Client();
+const discord = require('discord.js');
+const bot = new discord.Client();
 const prefix = '_';
 
 // ? 14 for 2 
@@ -33,10 +33,24 @@ var songs = {
 
 // for commands and moderation
 bot.on('message', message => {
+    // * functions here 
+
     const args = message.content.substr(prefix.length).split(' ');
 
     if (message.content.includes(badnames)) {
         message.channel.delete();
+    }
+
+    function disconnect() {
+        const channelID = message.member.voiceChannel.id;
+
+        bot.voiceConnections.forEach((channel) => {
+            if (channel.channel.id == channelID) {
+                channel.disconnect();
+
+                message.channel.send("Disconnected From " + channelName);
+            }
+        })
     }
 
     try {
@@ -71,7 +85,7 @@ bot.on('message', message => {
                 break;
 
             case 'game-night':
-                console.log(message.guild.roles);
+                // console.log(message.guild.roles);
                 const test =
                     `${message.guild.roles.get(varibles.GameNight)} Alright, its time to vote for this week's Game Night! Please, vote for the games you want to play! Also, please only vote if you will play said game(s)! We have had people messing up the vote because they don't play but vote anyways, and it is hard to decide what to do. \n`
 
@@ -101,22 +115,24 @@ bot.on('message', message => {
                 "Voting ends at 6:30 PM and Game Night starts at 7:00PM! If you have game suggestions DM a moderator \n";
 
                 // ! this only works on the pink team server
-                const sendChannel = message.member.guild.channels.get(varibles.testingChannelID);
+                const sendChannel = message.member.guild.channels.get(varibles.annoucmentChannelID);
                 sendChannel.send(test).then(msg => {
-                    msg.react(varibles.AnimalCrossing);
-                    msg.react(varibles.BrawlHalla);
-                    msg.react(varibles.Fortnite);
-                    msg.react(varibles.OSU);
-                    msg.react(varibles.GrassBlock);
-                    msg.react(varibles.Diamond);
-                    msg.react(varibles.Roblox);
-                    msg.react(varibles.SplatToon2);
-                    msg.react(varibles.SC2);
-                    msg.react(varibles.MK8D);
-                    msg.react(varibles.Smash);
-                    msg.react(varibles.Jackbox);
-                    msg.react(varibles.ElonMusk);
-                    msg.react(varibles.TrueYoov);
+                    msg.react(printEmoji(varibles.AnimalCrossing));
+                    msg.react(printEmoji(varibles.BrawlHalla));
+                    msg.react(printEmoji(varibles.Fortnite));
+                    msg.react(printEmoji(varibles.OSU));
+                    msg.react(printEmoji(varibles.GrassBlock));
+                    msg.react(printEmoji(varibles.Diamond));
+                    msg.react(printEmoji(varibles.Roblox));
+                    msg.react(printEmoji(varibles.SplatToon2));
+                    msg.react(printEmoji(varibles.SC2));
+                    msg.react(printEmoji(varibles.MK8D));
+                    msg.react(printEmoji(varibles.Smash));
+                    msg.react(printEmoji(varibles.Jackbox));
+                    msg.react(printEmoji(varibles.ElonMusk));
+                    msg.react(printEmoji(varibles.TrueYoov));
+                }).catch((err) => {
+                    console.error(err);
                 })
 
 
@@ -181,25 +197,23 @@ bot.on('message', message => {
                     const dispatcher = message.member.voiceChannel.connection.playStream(ytdl(songs.queue[0], { filter: "audioonly" }));
 
                     dispatcher.setVolume(volume);
-                }
 
-                setTimeout(() => {
-                    songs.queue.shift();
-                }, dispatcher.streamTime);
+                    setTimeout(() => {
+                        if (songs.queue.length == 0) {
+                            setTimeout(() => {
+                                disconnect();
+                            }, 1);
+                        } else {
+                            songs.queue.shift();
+                        }
+                    }, dispatcher.streamTime);
+                }
 
                 console.log(url);
                 break;
 
             case 'disconnect':
-                const channelName = message.member.voiceChannel.name;
-
-                bot.voiceConnections.forEach((channel) => {
-                    if (channel.channel.name == channelName) {
-                        channel.disconnect();
-
-                        message.channel.send("Disconnected From " + channelName);
-                    }
-                })
+                disconnect();
                 break;
 
             case 'bass-boost', 'boost', 'bass':
@@ -350,8 +364,14 @@ bot.on('ready', () => {
 
 bot.login(process.env.TOKEN);
 
-// * functions here 
-function printEmoji(Name) {
-    // todo add emoji id retreve with json
-    return bot.emojis.cache.get(Name);
+function printEmoji(EmojiName) {
+    var EmojiID = "";
+
+    bot.emojis.forEach((emoji) => {
+        if (emoji.name == EmojiName) {
+            EmojiID = emoji.id;
+        }
+    })
+
+    return bot.emojis.get(EmojiID);
 }

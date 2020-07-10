@@ -9,8 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.6.3",
+    "discord.js": "^11.6.4",
     "dotenv": "^8.2.0",
+    "get-youtube-id": "^1.0.1",
     "opusscript": "0.0.7",
     "puppeteer": "^4.0.0",
     "yt-scraper": "^2.0.1",
