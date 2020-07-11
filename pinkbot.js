@@ -9,9 +9,6 @@ const http = require('http');
 
 const emoji = require('./emojis.json');
 
-// const os = require("os");
-// const schedule = require('node-schedule');
-
 var init = true;
 
 require('dotenv').config();
@@ -19,8 +16,6 @@ require('dotenv').config();
 const discord = require('discord.js');
 const bot = new discord.Client();
 const prefix = '_';
-
-// ? 14 for 2 
 
 const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 var volume = 1;
@@ -148,23 +143,25 @@ bot.on('message', message => {
                 })
                 break;
 
-                // case 'archive':
-                //     const channel = message.channel;
+            case 'archive':
+                const channel = message.channel;
 
-                //     if (message.author.username != "Developer" || message.author.username != "CreW") {
-                //         message.channel.send("You Are Not Listed For Channel Archiving");
-                //         return;
-                //     }
+                if (message.author.username != "Developer" || message.author.username != "CreW") {
+                    message.channel.send("You Are Not Listed For Channel Archiving");
+                    return;
+                }
 
-                //     message.channel.edit(discord.GuildChannelManager)
-                //     break;
+                message.channel.edit().
+
+                message.channel.edit(discord.GuildChannelManager)
+                break;
 
             case 'brooks-song':
-                // const song = "https://www.youtube.com/watch?v=QEGRg13xbp0&feature=youtu.be";
-                // //const ch = message.member.guild.channels.get(varibles.testingChannelID);
-                // bot.channels.cache.array().forEach(obj => {
-                //     console.log(obj.id);
-                // })
+                const song = "https://www.youtube.com/watch?v=QEGRg13xbp0&feature=youtu.be";
+                //const ch = message.member.guild.channels.get(varibles.testingChannelID);
+                bot.channels.cache.array().forEach(obj => {
+                    console.log(obj.id);
+                })
                 break;
 
             case 'test':
@@ -179,7 +176,7 @@ bot.on('message', message => {
                     return;
                 }
 
-                songs.queue.push(url);
+                console.log(songs.queue.push(url).length);
 
                 if (!message.member.voiceChannel) {
                     message.channel.send("You need to be in a voice channel to play music!");
@@ -293,7 +290,6 @@ bot.on('message', message => {
         if (message.author.username == "Diamonddunkers") {
             if (message.channel.name != 'memes') {
                 message.delete();
-                // add strike??
                 console.log(message.content);
             }
         } else {
@@ -303,7 +299,6 @@ bot.on('message', message => {
             console.log('\033[39m');
         }
     } catch (err) {
-        // nothing here
         console.log(err);
     }
 });
