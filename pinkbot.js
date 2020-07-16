@@ -157,10 +157,12 @@ bot.on('message', message => {
 
             case 'brooks-song':
                 const song = "https://www.youtube.com/watch?v=QEGRg13xbp0&feature=youtu.be";
-                //const ch = message.member.guild.channels.get(varibles.testingChannelID);
-                bot.channels.cache.array().forEach(obj => {
-                    console.log(obj.id);
-                })
+
+                message.channel.send(`!p ${song}`);
+
+                // bot.channels.cache.array().forEach(obj => {
+                //     console.log(obj.id);
+                // })
                 break;
 
             case 'test':
@@ -320,7 +322,10 @@ bot.on('guildMemberAdd', member => {
 })
 
 bot.on('ready', () => {
+    const port = 4040;
+
     console.log('ready');
+    console.log('server running on port: ' + port);
     var htmlFile;
 
     fs.readFile("./public/index.html", (err, data) => {
@@ -351,7 +356,7 @@ bot.on('ready', () => {
                 break;
         }
 
-    }).listen(4040); //the server object listens on port 4040
+    }).listen(port); //the server object listens on port 4040
 
     bot.user.setPresence({
         game: {
