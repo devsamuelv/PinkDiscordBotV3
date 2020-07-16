@@ -79,16 +79,6 @@
     const sysCollection = firestore.collection("sys");
 
     sysCollection.doc("temp").onSnapshot((snap) => {
-        // cpu_temp.item(0).innerHTML = snap.data().cpu;
-        // if (debug) {
-        //     console.log(snap.data().cpu);
-        // }
-
-        // ram_space.item(0).innerHTML = snap.data().ram;
-        // if (debug) {
-        //     console.log(snap.data().ram);
-        // }
-
         ouput.item(0).innerHTML = snap.data().log;
         if (debug) {
             console.log(snap.data().log);

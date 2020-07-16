@@ -80,7 +80,6 @@ bot.on('message', message => {
                 break;
 
             case 'game-night':
-                // console.log(message.guild.roles);
                 const test =
                     `${message.guild.roles.get(varibles.GameNight)} Alright, its time to vote for this week's Game Night! Please, vote for the games you want to play! Also, please only vote if you will play said game(s)! We have had people messing up the vote because they don't play but vote anyways, and it is hard to decide what to do. \n`
 
