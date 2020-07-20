@@ -4,7 +4,8 @@
   "description": "- [ ] Add Message Censoring\r - [X] Add Game Night Commands\r - [ ] Add User Spamming\r - [X] Add Poll",
   "main": "pinkbot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-bot": "tsc pinkbot.ts"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +15,7 @@
     "get-youtube-id": "^1.0.1",
     "opusscript": "0.0.7",
     "puppeteer": "^4.0.0",
+    "typescript": "^4.0.0-beta",
     "yt-scraper": "^2.0.1",
     "ytdl-core": "^2.1.7"
   }
