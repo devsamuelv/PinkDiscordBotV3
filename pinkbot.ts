@@ -30,12 +30,6 @@ bot.on('message', (message) => {
 
     const args = message.content.substr(prefix.length).split(' ');
 
-    badnames.forEach((name) => {
-        if (message.content.includes(name)) {
-            message.channel.delete();
-        }
-    })
-
     function disconnect() {
         const channelID = message.member.voiceChannel.id;
 
@@ -48,7 +42,7 @@ bot.on('message', (message) => {
         })
     }
 
-    function printEmoji(EmojiName: string, guild: string): Emoji {
+    function printEmoji(guild: string, EmojiName: string): Emoji {
         var EmojiID = "";
     
         bot.emojis.forEach((emoji) => {
@@ -57,7 +51,7 @@ bot.on('message', (message) => {
             }
         })
         
-        // ! trust it is not null
+        // ! is to trust it is not null
         return new Emoji(bot.guilds.get(guild)!, bot.emojis.get(EmojiID)!);
     }
 
@@ -67,6 +61,11 @@ bot.on('message', (message) => {
             case "meme":
                 // todo work on this later
                 message.channel.send("Sending Memes");
+
+                varibles.Memes.forEach((emoji: string) => {
+                    message.channel.send(printEmoji(guild_name, emoji));
+                })
+
                 break;
 
             case "help":

@@ -28,11 +28,6 @@ bot.on('message', function (message) {
     var guild_name = message.guild.name;
     // * functions here 
     var args = message.content.substr(prefix.length).split(' ');
-    badnames.forEach(function (name) {
-        if (message.content.includes(name)) {
-            message.channel.delete();
-        }
-    });
     function disconnect() {
         var channelID = message.member.voiceChannel.id;
         bot.voiceConnections.forEach(function (channel) {
@@ -42,14 +37,14 @@ bot.on('message', function (message) {
             }
         });
     }
-    function printEmoji(EmojiName, guild) {
+    function printEmoji(guild, EmojiName) {
         var EmojiID = "";
         bot.emojis.forEach(function (emoji) {
             if (emoji.name == EmojiName) {
                 EmojiID = emoji.id;
             }
         });
-        // ! trust it is not null
+        // ! is to trust it is not null
         return new discord_js_1.Emoji(bot.guilds.get(guild), bot.emojis.get(EmojiID));
     }
     try {
@@ -58,6 +53,9 @@ bot.on('message', function (message) {
             case "meme":
                 // todo work on this later
                 message.channel.send("Sending Memes");
+                varibles.Memes.forEach(function (emoji) {
+                    message.channel.send(printEmoji(guild_name, emoji));
+                });
                 break;
             case "help":
                 message.channel.send("Commands: _meme, _help, _hi, _ban, _update-emoji, _bass-boost <url> <boost level>, disconnect");
