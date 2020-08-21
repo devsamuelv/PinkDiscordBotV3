@@ -378,13 +378,15 @@ bot.on('guildMemberUpdate', (old, newMember) => {
     const member = newMember;
     
     if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed")) {
-        if (member.kickable) {
-            console.log("{Banning User}: " + member.user.username + " Because his nickname is " + member.displayName + " ")
+        console.log("{Renaming User}: " + member.user.username + " Because his nickname is " + member.displayName + " ")
 
-            member.guild.member(member.user).kick("Your Name Is Not Allowed").then((d) => {
-                console.log(d);
+        if (member.user.username.toLowerCase() === "saturn") {
+            member.guild.member(member.user).edit({
+                nick: "Shane | 6323",
             }).catch((err) => {
                 console.error(err);
+            }).then((d) => {
+                console.log(d);
             })
         }
     }

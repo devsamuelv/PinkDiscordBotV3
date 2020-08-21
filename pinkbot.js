@@ -326,12 +326,14 @@ bot.on('message', function (message) {
 bot.on('guildMemberUpdate', function (old, newMember) {
     var member = newMember;
     if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed")) {
-        if (member.kickable) {
-            console.log("{Banning User}: " + member.user.username + " Because his nickname is " + member.displayName + " ");
-            member.guild.member(member.user).kick("Your Name Is Not Allowed").then(function (d) {
-                console.log(d);
+        console.log("{Renaming User}: " + member.user.username + " Because his nickname is " + member.displayName + " ");
+        if (member.user.username.toLowerCase() === "saturn") {
+            member.guild.member(member.user).edit({
+                nick: "Shane | 6323",
             }).catch(function (err) {
                 console.error(err);
+            }).then(function (d) {
+                console.log(d);
             });
         }
     }
