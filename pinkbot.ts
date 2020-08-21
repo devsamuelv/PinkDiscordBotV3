@@ -426,7 +426,7 @@ bot.on('ready', () => {
         switch (req.url) {
             // server is working
             case "/isrunning":
-                res.write("Server is Running");
+                res.write("✅ Server is Running ✅");
                 res.end();
                 break;
 
