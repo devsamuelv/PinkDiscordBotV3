@@ -1,15 +1,28 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var discord_js_1 = require("discord.js");
 var backend = __importStar(require("./backend/ts/embeds"));
 var varibles = __importStar(require("./backend/ts/varibles"));
+var teamapp = __importStar(require("./backend/ts/web/teamapp/teamapp"));
 var ytdl = __importStar(require("ytdl-core"));
 var http = __importStar(require("http"));
 var dotenv = __importStar(require("dotenv"));
@@ -27,6 +40,11 @@ bot.on('message', function (message) {
     // * varibles here
     var guild_name = message.guild.name;
     // * functions here 
+    if (!message.content.startsWith(prefix, 0)) {
+        console.log("" + message.content.startsWith(prefix, 0));
+        return;
+    }
+    console.log('test');
     var args = message.content.substr(prefix.length).split(' ');
     function disconnect() {
         var channelID = message.member.voiceChannel.id;
@@ -121,6 +139,61 @@ bot.on('message', function (message) {
                     msg.react(printEmoji(guild_name, varibles.TrueYoov));
                 });
                 break;
+            case 'test-game-night':
+                // ! fix this 
+                /*
+                todo add pink color
+                todo add the ╔ ═ ║ ╚
+                todo add geen and black for the color FOR A PRANK
+                todo add tables for the games
+ 
+                */
+                message.channel.send("" + message.guild.roles.get(varibles.GameNight));
+                var testMessage = new discord_js_1.RichEmbed({
+                    color: 0x0099ff,
+                    title: 'Some title',
+                    author: {
+                        name: 'Pinky',
+                        icon_url: 'https://i.imgur.com/wSTFkRM.png',
+                        url: 'https://discord.js.org',
+                    },
+                    description: "Alright, its time to vote for this week's Game Night! Please, vote for the games you want to play! Also, please only vote if you will play said game(s)! We have had people messing up the vote because they don't play but vote anyways, and it is hard to decide what to do. \n"
+                        + "\n" +
+                        "**Please note:** Jackbox games will be played every week unless the majority does not want to play. \n"
+                        +
+                            ("If you do not want to play any Jackbox games, please vote with " + printEmoji(guild_name, varibles.Jackbox) + " \n"),
+                    thumbnail: {
+                        url: 'https://i.imgur.com/wSTFkRM.png',
+                    },
+                    fields: [
+                        {
+                            name: 'Regular field title',
+                            value: 'Some value here',
+                        },
+                        {
+                            name: 'Inline field title',
+                            value: 'Some value here',
+                        },
+                        {
+                            name: 'Inline field title',
+                            value: 'Some value here',
+                        },
+                        {
+                            name: 'Inline field title',
+                            value: 'Some value here',
+                        },
+                    ],
+                    image: {
+                        url: 'https://i.imgur.com/wSTFkRM.png',
+                    },
+                    timestamp: new Date(),
+                    footer: {
+                        text: 'Some footer text here',
+                        icon_url: 'https://i.imgur.com/wSTFkRM.png',
+                    },
+                });
+                message.channel.send(testMessage);
+                break;
             case 'poll':
                 var output = args.slice(1).join(" ");
                 message.channel.send("" + ("**From**: " + message.author.username + " ") + output + "").then(function (msg) {
@@ -150,9 +223,12 @@ bot.on('message', function (message) {
                 // })
                 break;
             case 'test':
-                printEmoji(guild_name, 'shanePog');
+                teamapp.postEvents(bot);
                 break;
             case 'p':
+                if (!message.content.startsWith(prefix, 0)) {
+                    return;
+                }
                 var url = args[1];
                 if (url == null) {
                     message.channel.send('⛔ Please link a url ⛔');
@@ -198,9 +274,6 @@ bot.on('message', function (message) {
                     message.channel.send("You need to be in a voice channel to play music!");
                     return;
                 }
-                // if (!servers[message.guild.id]) servers[message.guild.id] = {
-                //     queue: []
-                // }
                 if (!message.guild.voiceConnection) {
                     message.member.voiceChannel.join().catch(function (err) {
                         console.log(err);
@@ -250,11 +323,32 @@ bot.on('message', function (message) {
         console.log(err);
     }
 });
+bot.on('guildMemberUpdate', function (old, newMember) {
+    var member = newMember;
+    if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed")) {
+        if (member.bannable) {
+            console.log("{Banning User}: " + member.user.username + " Because his nickname is " + member.displayName + " ");
+            member.guild.member(member.user).ban("Your Name Is Not Allowed").then(function (d) {
+                console.log(d);
+            }).catch(function (err) {
+                console.error(err);
+            });
+        }
+    }
+});
+var run = true;
 bot.on('message', function (message) {
     var content = message.content.toLowerCase();
     if (content.includes("when is game night")) {
+        setTimeout(function () {
+            run = true;
+        }, 1000);
+        if (run === false) {
+            return;
+        }
         message.channel.send(backend.gameNightEmbed);
     }
+    run = false;
 });
 bot.on('ready', function () {
     var port = 4040;

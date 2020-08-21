@@ -1,11 +1,12 @@
-import { Client, Message, Emoji, TextChannel } from 'discord.js';
+import { Client, Message, Emoji, TextChannel, MessageEmbed, RichEmbed } from 'discord.js';
 import * as backend from './backend/ts/embeds';
 import * as varibles from './backend/ts/varibles';
+import * as teamapp from './backend/ts/web/teamapp/teamapp';
 
 import * as ytdl from 'ytdl-core';
 import * as http from 'http';
 import * as dotenv from 'dotenv'; 
-import * as fs from 'fs'; 
+import * as fs from 'fs';
 
 //const emoji = require('emoji.json');
 const bot = new Client();
@@ -27,6 +28,13 @@ bot.on('message', (message) => {
     const guild_name = message.guild.name;
 
     // * functions here 
+
+    if (!message.content.startsWith(prefix, 0)) {
+        console.log(`${message.content.startsWith(prefix, 0)}`);
+        return;
+    }
+
+    console.log('test')
 
     const args = message.content.substr(prefix.length).split(' ');
 
@@ -123,7 +131,7 @@ bot.on('message', (message) => {
                 // ! this only works on the pink team server
                 const sendChannel = (message.member.guild.channels.get(varibles.annoucmentChannelID)! as TextChannel);
 
-                sendChannel.send(test).then((msg: Message)  => {
+                sendChannel.send(test).then((msg: Message) => {
                     msg.react(printEmoji(guild_name, varibles.AnimalCrossing));
                     msg.react(printEmoji(guild_name, varibles.BrawlHalla));
                     msg.react(printEmoji(guild_name, varibles.Fortnite));
@@ -131,7 +139,7 @@ bot.on('message', (message) => {
                     msg.react(printEmoji(guild_name, varibles.GrassBlock));
                     msg.react(printEmoji(guild_name, varibles.Diamond));
                     msg.react(printEmoji(guild_name, varibles.Roblox));
-                    msg.react(printEmoji(guild_name, varibles.SplatToon2));
+                    msg.react(printEmoji(guild_name, varibles.SplatToon2)); 
                     msg.react(printEmoji(guild_name, varibles.SC2));
                     msg.react(printEmoji(guild_name, varibles.MK8D));
                     msg.react(printEmoji(guild_name, varibles.Smash));
@@ -141,6 +149,68 @@ bot.on('message', (message) => {
                 })
 
 
+                break;
+
+            case 'test-game-night':
+                // ! fix this 
+                /* 
+                todo add pink color
+                todo add the ╔ ═ ║ ╚ 
+                todo add geen and black for the color FOR A PRANK  
+                todo add tables for the games
+ 
+                */
+
+                message.channel.send(`${message.guild.roles.get(varibles.GameNight)}`);
+
+                const testMessage = new RichEmbed({
+                    color: 0x0099ff,
+                    title: 'Some title',
+                    author: {
+                        name: 'Pinky',
+                        icon_url: 'https://i.imgur.com/wSTFkRM.png',
+                        url: 'https://discord.js.org',
+                    },
+                    description: 
+                        `Alright, its time to vote for this week's Game Night! Please, vote for the games you want to play! Also, please only vote if you will play said game(s)! We have had people messing up the vote because they don't play but vote anyways, and it is hard to decide what to do. \n`
+
+                        +"\n" +
+                        "**Please note:** Jackbox games will be played every week unless the majority does not want to play. \n"
+        
+                        +
+                        `If you do not want to play any Jackbox games, please vote with ${printEmoji(guild_name, varibles.Jackbox)} \n`,
+                    thumbnail: {
+                        url: 'https://i.imgur.com/wSTFkRM.png',
+                    },
+                    fields: [
+                        {
+                            name: 'Regular field title',
+                            value: 'Some value here',
+                        },
+                        {
+                            name: 'Inline field title',
+                            value: 'Some value here',
+                        },
+                        {
+                            name: 'Inline field title',
+                            value: 'Some value here',
+                        },
+                        {
+                            name: 'Inline field title',
+                            value: 'Some value here',
+                        },
+                    ],
+                    image: {
+                        url: 'https://i.imgur.com/wSTFkRM.png',
+                    },
+                    timestamp: new Date(),
+                    footer: {
+                        text: 'Some footer text here',
+                        icon_url: 'https://i.imgur.com/wSTFkRM.png',
+                    },
+                });
+
+                message.channel.send(testMessage);
                 break;
 
             case 'poll':
@@ -178,13 +248,15 @@ bot.on('message', (message) => {
                 // bot.channels.cache.array().forEach(obj => {
                 //     console.log(obj.id);
                 // })
-                break;
+                break; 
 
             case 'test':
-                printEmoji(guild_name, 'shanePog');
+                teamapp.postEvents(bot);
                 break;
 
             case 'p':
+                if (!message.content.startsWith(prefix, 0)) { return; }
+
                 const url: string = args[1];
 
                 if (url == null) {
@@ -242,10 +314,6 @@ bot.on('message', (message) => {
                     message.channel.send("You need to be in a voice channel to play music!");
                     return;
                 }
-
-                // if (!servers[message.guild.id]) servers[message.guild.id] = {
-                //     queue: []
-                // }
 
                 if (!message.guild.voiceConnection) {
                     message.member.voiceChannel.join().catch((err: string) => {
@@ -306,11 +374,38 @@ bot.on('message', (message) => {
     }
 });
 
+bot.on('guildMemberUpdate', (old, newMember) => {
+    const member = newMember;
+    
+    if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed")) {
+        if (member.bannable) {
+            console.log("{Banning User}: " + member.user.username + " Because his nickname is " + member.displayName + " ")
+
+            member.guild.member(member.user).ban("Your Name Is Not Allowed").then((d) => {
+                console.log(d);
+            }).catch((err) => {
+                console.error(err);
+            })
+        }
+    }
+})
+
+var run = true;
 bot.on('message', message => {
     const content = message.content.toLowerCase();
     if (content.includes("when is game night")) {
+
+        setTimeout(() => {
+            run = true;
+        }, 1000)
+    
+        if (run === false) { return; }
+
         message.channel.send(backend.gameNightEmbed);
     }
+
+    run = false;
+
 })
 
 bot.on('ready', () => {

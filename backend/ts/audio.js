@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ConvertTo1ChannelStream = exports.convertBufferTo1Channel = void 0;
 var stream_1 = require("stream");
 function convertBufferTo1Channel(buffer) {
     var convertedBuffer = Buffer.alloc(buffer.length / 2);

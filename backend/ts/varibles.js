@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Memes = exports.GameNight = exports.PinkDozer = exports.Confucius = exports.TrueYoov = exports.SC2 = exports.SplatToon2 = exports.OSU = exports.BrawlHalla = exports.AnimalCrossing = exports.TROLL = exports.MK8D = exports.ElonMusk = exports.Jackbox = exports.Fortnite = exports.Roblox = exports.Smash = exports.Diamond = exports.GrassBlock = exports.TestServerTestChannelID = exports.testingChannelID = exports.annoucmentChannelID = exports.Botlogo = void 0;
 // * Bot Image's
 exports.Botlogo = "https://cdn.discordapp.com/app-icons/632687408793780275/4885fa093e2c818de8b830d1a6cf857b.png";
 // * Channel ID's

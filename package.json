@@ -4,17 +4,21 @@
   "description": "- [ ] Add Message Censoring\r - [X] Add Game Night Commands\r - [ ] Add User Spamming\r - [X] Add Poll",
   "main": "pinkbot.js",
   "scripts": {
+    "start": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-bot": "tsc pinkbot.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
     "discord.js": "^11.6.4",
     "dotenv": "^8.2.0",
     "get-youtube-id": "^1.0.1",
+    "node-cron": "^2.0.3",
     "opusscript": "0.0.7",
-    "puppeteer": "^4.0.0",
+    "puppeteer": "^4.0.1",
     "typescript": "^4.0.0-beta",
     "yt-scraper": "^2.0.1",
     "ytdl-core": "^2.1.7"
