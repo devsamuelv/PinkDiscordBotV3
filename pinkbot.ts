@@ -378,10 +378,10 @@ bot.on('guildMemberUpdate', (old, newMember) => {
     const member = newMember;
     
     if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed")) {
-        if (member.bannable) {
+        if (member.kickable) {
             console.log("{Banning User}: " + member.user.username + " Because his nickname is " + member.displayName + " ")
 
-            member.guild.member(member.user).ban("Your Name Is Not Allowed").then((d) => {
+            member.guild.member(member.user).kick("Your Name Is Not Allowed").then((d) => {
                 console.log(d);
             }).catch((err) => {
                 console.error(err);

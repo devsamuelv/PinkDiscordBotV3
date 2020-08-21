@@ -326,9 +326,9 @@ bot.on('message', function (message) {
 bot.on('guildMemberUpdate', function (old, newMember) {
     var member = newMember;
     if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed")) {
-        if (member.bannable) {
+        if (member.kickable) {
             console.log("{Banning User}: " + member.user.username + " Because his nickname is " + member.displayName + " ");
-            member.guild.member(member.user).ban("Your Name Is Not Allowed").then(function (d) {
+            member.guild.member(member.user).kick("Your Name Is Not Allowed").then(function (d) {
                 console.log(d);
             }).catch(function (err) {
                 console.error(err);
