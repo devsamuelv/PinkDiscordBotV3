@@ -25,7 +25,7 @@ var songs: string[] = [
 // for commands and moderation
 bot.on('message', (message) => {
     // * varibles here
-    const guild_name = message.guild.name;
+    const guild_name = message.guild?.name;
 
     // * functions here 
 
@@ -354,6 +354,10 @@ bot.on('message', (message) => {
                 message.channel.send(`Hello ${author}`);
                 break;
 
+            case "uptime":
+                message.channel.send(bot.uptime.toString());
+                break;
+
             case 'update-emoji':
                 fs.writeFile('./emojis.json', JSON.stringify(bot.emojis.array().toString()), (err) => {
                     if (err) {
@@ -374,21 +378,20 @@ bot.on('message', (message) => {
     }
 });
 
+var guild_run_once = "";
 bot.on('guildMemberUpdate', (old, newMember) => {
     const member = newMember;
     
-    if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed")) {
-        console.log("{Renaming User}: " + member.user.username + " Because his nickname is " + member.displayName + " ")
+    if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed") && guild_run_once !== member.user.username) {
+        console.log("{Sending User Message}: " + member.user.username + " Because his nickname is " + member.displayName + " ")
 
-        if (member.user.username.toLowerCase() === "saturn") {
-            member.guild.member(member.user)
-            
-            .setNickname("Shane | 6323");
-        } else {
-            member.guild.member(member.user)
-                .setNickname("{Renamed}");
-        }
+        member.send(":octagonal_sign: :hand_splayed: "+ member.user.username +" Please Change You Name Back to "+ old.displayName +" a Modorator Will contact you! :octagonal_sign: ")
+        guild_run_once = member.user.username;
     }
+
+    setTimeout(() => {
+        guild_run_once = "";
+    }, 5000);
 })
 
 var run = true;

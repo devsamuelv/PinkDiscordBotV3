@@ -37,8 +37,9 @@ var servers = {};
 var songs = [];
 // for commands and moderation
 bot.on('message', function (message) {
+    var _a;
     // * varibles here
-    var guild_name = message.guild.name;
+    var guild_name = (_a = message.guild) === null || _a === void 0 ? void 0 : _a.name;
     // * functions here 
     if (!message.content.startsWith(prefix, 0)) {
         console.log("" + message.content.startsWith(prefix, 0));
@@ -303,6 +304,9 @@ bot.on('message', function (message) {
                 var author = message.author.username;
                 message.channel.send("Hello " + author);
                 break;
+            case "uptime":
+                message.channel.send(bot.uptime.toString());
+                break;
             case 'update-emoji':
                 fs.writeFile('./emojis.json', JSON.stringify(bot.emojis.array().toString()), function (err) {
                     if (err) {
@@ -323,19 +327,17 @@ bot.on('message', function (message) {
         console.log(err);
     }
 });
+var guild_run_once = "";
 bot.on('guildMemberUpdate', function (old, newMember) {
     var member = newMember;
-    if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed")) {
-        console.log("{Renaming User}: " + member.user.username + " Because his nickname is " + member.displayName + " ");
-        if (member.user.username.toLowerCase() === "saturn") {
-            member.guild.member(member.user)
-                .setNickname("Shane | 6323");
-        }
-        else {
-            member.guild.member(member.user)
-                .setNickname("{Renamed}");
-        }
+    if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed") && guild_run_once !== member.user.username) {
+        console.log("{Sending User Message}: " + member.user.username + " Because his nickname is " + member.displayName + " ");
+        member.send(":octagonal_sign: :hand_splayed: " + member.user.username + " Please Change You Name Back to " + old.displayName + " a Modorator Will contact you! :octagonal_sign: ");
+        guild_run_once = member.user.username;
     }
+    setTimeout(function () {
+        guild_run_once = "";
+    }, 5000);
 });
 var run = true;
 bot.on('message', function (message) {
