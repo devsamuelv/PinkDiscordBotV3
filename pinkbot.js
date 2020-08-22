@@ -328,13 +328,12 @@ bot.on('guildMemberUpdate', function (old, newMember) {
     if (member.displayName.toLowerCase().includes("pipebomb") || member.displayName.toLowerCase().includes("weed")) {
         console.log("{Renaming User}: " + member.user.username + " Because his nickname is " + member.displayName + " ");
         if (member.user.username.toLowerCase() === "saturn") {
-            member.guild.member(member.user).edit({
-                nick: "Shane | 6323",
-            }).catch(function (err) {
-                console.error(err);
-            }).then(function (d) {
-                console.log(d);
-            });
+            member.guild.member(member.user)
+                .setNickname("Shane | 6323");
+        }
+        else {
+            member.guild.member(member.user)
+                .setNickname("{Renamed}");
         }
     }
 });
@@ -364,7 +363,7 @@ bot.on('ready', function () {
         switch (req.url) {
             // server is working
             case "/isrunning":
-                res.write("Server is Running");
+                res.write("✅ Server is Running ✅");
                 res.end();
                 break;
             default:

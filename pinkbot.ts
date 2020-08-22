@@ -381,20 +381,19 @@ bot.on('guildMemberUpdate', (old, newMember) => {
         console.log("{Renaming User}: " + member.user.username + " Because his nickname is " + member.displayName + " ")
 
         if (member.user.username.toLowerCase() === "saturn") {
-            member.guild.member(member.user).edit({
-                nick: "Shane | 6323",
-            }).catch((err) => {
-                console.error(err);
-            }).then((d) => {
-                console.log(d);
-            })
+            member.guild.member(member.user)
+            
+            .setNickname("Shane | 6323");
+        } else {
+            member.guild.member(member.user)
+                .setNickname("{Renamed}");
         }
     }
 })
 
 var run = true;
 bot.on('message', message => {
-    const content = message.content.toLowerCase();
+    const content = message.content.toLowerCase(); 
     if (content.includes("when is game night")) {
 
         setTimeout(() => {
