@@ -38,6 +38,49 @@ var songs = [];
 // for commands and moderation
 bot.on('message', function (message) {
     var _a;
+    var video_links = [
+        "https://www.youtube.com/watch?v=0TbObNMXj2E",
+        "https://www.youtube.com/watch?v=WwhzLBvK5VE",
+        "https://www.youtube.com/watch?v=AAuZlHuX2cY",
+        "https://www.youtube.com/watch?v=9J8lKV9fJ2I",
+        "https://www.youtube.com/watch?v=mOsy7vEod5o",
+        "https://www.youtube.com/watch?v=Cs3dIYF0VqI",
+        "https://www.youtube.com/watch?v=yGirw07NWlQ",
+        "https://www.youtube.com/watch?v=NmD3AFlKjf4",
+        "https://www.youtube.com/watch?v=6FnfVAX2lBE",
+        "https://www.youtube.com/watch?v=VYY4WivkpUI",
+        "https://www.youtube.com/watch?v=7OEOuKjIyJg",
+        "https://www.youtube.com/watch?v=ZQXYocKlOY8",
+        "https://www.youtube.com/watch?v=ZhNOr3_L4mo",
+        "https://www.youtube.com/watch?v=lPvo_zZ_6fI",
+        "https://www.youtube.com/watch?v=NOKl4iR3aJc",
+        "https://www.youtube.com/watch?v=DMEcl6P3hjQ",
+    ];
+    video_links.forEach(function (url) {
+        if (message.content.includes(url)) {
+            console.log("delete");
+            if (message.deletable) {
+                message.delete();
+                message.guild.channels.forEach(function (channel) {
+                    if (channel.type === "voice") {
+                        message.guild.members.forEach(function (member) {
+                            if (member.user.username === "Rythm") {
+                                setTimeout(function () {
+                                    member.setVoiceChannel(null);
+                                }, 1000);
+                                setTimeout(function () {
+                                    member.setVoiceChannel(null);
+                                }, 1000);
+                                setTimeout(function () {
+                                    member.setVoiceChannel(null);
+                                }, 1000);
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    });
     // * varibles here
     var guild_name = (_a = message.guild) === null || _a === void 0 ? void 0 : _a.name;
     // * functions here 

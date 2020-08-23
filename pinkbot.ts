@@ -1,4 +1,4 @@
-import { Client, Message, Emoji, TextChannel, MessageEmbed, RichEmbed } from 'discord.js';
+import { Client, Message, Emoji, TextChannel, MessageEmbed, RichEmbed, VoiceChannel } from 'discord.js';
 import * as backend from './backend/ts/embeds';
 import * as varibles from './backend/ts/varibles';
 import * as teamapp from './backend/ts/web/teamapp/teamapp';
@@ -24,6 +24,54 @@ var songs: string[] = [
 
 // for commands and moderation
 bot.on('message', (message) => {
+    const video_links = [
+        "https://www.youtube.com/watch?v=0TbObNMXj2E",
+        "https://www.youtube.com/watch?v=WwhzLBvK5VE",
+        "https://www.youtube.com/watch?v=AAuZlHuX2cY",
+        "https://www.youtube.com/watch?v=9J8lKV9fJ2I",
+        "https://www.youtube.com/watch?v=mOsy7vEod5o",
+        "https://www.youtube.com/watch?v=Cs3dIYF0VqI",
+        "https://www.youtube.com/watch?v=yGirw07NWlQ",
+        "https://www.youtube.com/watch?v=NmD3AFlKjf4",
+        "https://www.youtube.com/watch?v=6FnfVAX2lBE",
+        "https://www.youtube.com/watch?v=VYY4WivkpUI",
+        "https://www.youtube.com/watch?v=7OEOuKjIyJg",
+        "https://www.youtube.com/watch?v=ZQXYocKlOY8",
+        "https://www.youtube.com/watch?v=ZhNOr3_L4mo",
+        "https://www.youtube.com/watch?v=lPvo_zZ_6fI",
+        "https://www.youtube.com/watch?v=NOKl4iR3aJc",
+        "https://www.youtube.com/watch?v=DMEcl6P3hjQ",
+    ];
+
+    video_links.forEach((url) => { 
+        if (message.content.includes(url)) {
+            console.log("delete")
+            if (message.deletable) {
+                message.delete();
+
+                message.guild.channels.forEach((channel) => {
+                    if (channel.type === "voice") {
+                        message.guild.members.forEach((member) => {
+                            if (member.user.username === "Rythm") {
+                                setTimeout(() => {
+                                    member.setVoiceChannel(null);
+                                }, 1000);
+
+                                setTimeout(() => {
+                                    member.setVoiceChannel(null);
+                                }, 1000);
+
+                                setTimeout(() => {
+                                    member.setVoiceChannel(null);
+                                }, 1000);
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    })
+
     // * varibles here
     const guild_name = message.guild?.name;
 
