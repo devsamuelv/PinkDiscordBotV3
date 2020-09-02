@@ -2,15 +2,18 @@ import { Client, Message, Emoji, TextChannel, MessageEmbed, RichEmbed, VoiceChan
 import * as backend from './backend/ts/embeds';
 import * as varibles from './backend/ts/varibles';
 import * as teamapp from './backend/ts/web/teamapp/teamapp';
+import words = require('bad-words');
 
 import * as ytdl from 'ytdl-core';
 import * as http from 'http';
 import * as dotenv from 'dotenv'; 
 import * as fs from 'fs';
+import { PrintInfo } from './backend/ts/system/terminalout';
 
 //const emoji = require('emoji.json');
 const bot = new Client();
 const prefix = '_';
+const badwords = new words();
 
 const badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 var volume = 1;
@@ -21,6 +24,8 @@ var servers = {};
 var songs: string[] = [
 
 ];
+
+var told_users: string[] = [];
 
 // for commands and moderation
 bot.on('message', (message) => {
@@ -43,8 +48,16 @@ bot.on('message', (message) => {
         "https://www.youtube.com/watch?v=DMEcl6P3hjQ",
     ];
 
-    if (message.author.username == "rape cures autism") {
+    if (badwords.isProfane(message.content)) {
         message.delete();
+
+        told_users.forEach((user) => {
+            if (user != message.author.username) {
+                message.channel.send(`🛑 ${message.author.username} please keep it gp 🛑`);
+
+                told_users.push(message.author.username);
+            }
+        })
     }
 
     video_links.forEach((url) => { 

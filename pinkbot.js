@@ -23,6 +23,7 @@ var discord_js_1 = require("discord.js");
 var backend = __importStar(require("./backend/ts/embeds"));
 var varibles = __importStar(require("./backend/ts/varibles"));
 var teamapp = __importStar(require("./backend/ts/web/teamapp/teamapp"));
+var words = require("bad-words");
 var ytdl = __importStar(require("ytdl-core"));
 var http = __importStar(require("http"));
 var dotenv = __importStar(require("dotenv"));
@@ -30,11 +31,13 @@ var fs = __importStar(require("fs"));
 //const emoji = require('emoji.json');
 var bot = new discord_js_1.Client();
 var prefix = '_';
+var badwords = new words();
 var badnames = ['pipebomb', 'pipe bomb', 'bomb', 'weed', 'pp small'];
 var volume = 1;
 dotenv.config();
 var servers = {};
 var songs = [];
+var told_users = [];
 // for commands and moderation
 bot.on('message', function (message) {
     var video_links = [
@@ -55,6 +58,15 @@ bot.on('message', function (message) {
         "https://www.youtube.com/watch?v=NOKl4iR3aJc",
         "https://www.youtube.com/watch?v=DMEcl6P3hjQ",
     ];
+    if (badwords.isProfane(message.content)) {
+        message.delete();
+        told_users.forEach(function (user) {
+            if (user != message.author.username) {
+                message.channel.send("\uD83D\uDED1 " + message.author.username + " please keep it gp \uD83D\uDED1");
+                told_users.push(message.author.username);
+            }
+        });
+    }
     video_links.forEach(function (url) {
         if (message.content.includes(url)) {
             console.log("delete");
