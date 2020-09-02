@@ -76,8 +76,6 @@ bot.on('message', (message) => {
         } 
     })
 
-    if ()
-
     // * varibles here
     // console.log(message.guild);
     const guild_name = message.guild.id;
