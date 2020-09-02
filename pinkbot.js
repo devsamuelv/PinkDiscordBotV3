@@ -37,7 +37,6 @@ var servers = {};
 var songs = [];
 // for commands and moderation
 bot.on('message', function (message) {
-    var _a;
     var video_links = [
         "https://www.youtube.com/watch?v=0TbObNMXj2E",
         "https://www.youtube.com/watch?v=WwhzLBvK5VE",
@@ -82,13 +81,13 @@ bot.on('message', function (message) {
         }
     });
     // * varibles here
-    var guild_name = (_a = message.guild) === null || _a === void 0 ? void 0 : _a.name;
+    // console.log(message.guild);
+    var guild_name = message.guild.id;
     // * functions here 
     if (!message.content.startsWith(prefix, 0)) {
         console.log("" + message.content.startsWith(prefix, 0));
         return;
     }
-    console.log('test');
     var args = message.content.substr(prefix.length).split(' ');
     function disconnect() {
         var channelID = message.member.voiceChannel.id;
@@ -289,21 +288,19 @@ bot.on('message', function (message) {
                         console.log(err);
                     });
                 }
-                if (!message.member.voiceChannel.connection.speaking) {
-                    // @ts-ignore
-                    var dispatcher = message.member.voiceChannel.connection.playStream(new ytdl(songs[0], { filter: "audioonly" }));
-                    dispatcher.setVolume(volume);
-                    setTimeout(function () {
-                        if (songs.length == 0) {
-                            setTimeout(function () {
-                                disconnect();
-                            }, 1);
-                        }
-                        else {
-                            songs.shift();
-                        }
-                    }, dispatcher.totalStreamTime);
-                }
+                // @ts-ignore
+                var dispatcher = message.member.voiceChannel.connection.playStream(new ytdl(songs[0], { filter: "audioonly" }), "video");
+                dispatcher.setVolume(volume);
+                setTimeout(function () {
+                    if (songs.length == 0) {
+                        setTimeout(function () {
+                            disconnect();
+                        }, 1);
+                    }
+                    else {
+                        songs.shift();
+                    }
+                }, dispatcher.totalStreamTime);
                 console.log(url);
                 break;
             case 'disconnect':

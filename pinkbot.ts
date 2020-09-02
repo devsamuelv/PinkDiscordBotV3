@@ -1,4 +1,4 @@
-import { Client, Message, Emoji, TextChannel, MessageEmbed, RichEmbed, VoiceChannel } from 'discord.js';
+import { Client, Message, Emoji, TextChannel, MessageEmbed, RichEmbed, VoiceChannel, StreamOptions, StreamDispatcher } from 'discord.js';
 import * as backend from './backend/ts/embeds';
 import * as varibles from './backend/ts/varibles';
 import * as teamapp from './backend/ts/web/teamapp/teamapp';
@@ -43,6 +43,10 @@ bot.on('message', (message) => {
         "https://www.youtube.com/watch?v=DMEcl6P3hjQ",
     ];
 
+    if (message.author.username == "rape cures autism") {
+        message.delete();
+    }
+
     video_links.forEach((url) => { 
         if (message.content.includes(url)) {
             console.log("delete")
@@ -69,11 +73,14 @@ bot.on('message', (message) => {
                     }
                 })
             }
-        }
+        } 
     })
 
+    if ()
+
     // * varibles here
-    const guild_name = message.guild?.name;
+    // console.log(message.guild);
+    const guild_name = message.guild.id;
 
     // * functions here 
 
@@ -81,8 +88,6 @@ bot.on('message', (message) => {
         console.log(`${message.content.startsWith(prefix, 0)}`);
         return;
     }
-
-    console.log('test')
 
     const args = message.content.substr(prefix.length).split(' ');
 
@@ -315,7 +320,7 @@ bot.on('message', (message) => {
                 songs.push(url);
 
                 console.log(songs.length);
-
+ 
                 if (!message.member.voiceChannel) {
                     message.channel.send("You need to be in a voice channel to play music!");
                     return;
@@ -327,22 +332,20 @@ bot.on('message', (message) => {
                     })
                 }
 
-                if (!message.member.voiceChannel.connection.speaking) {
-                    // @ts-ignore
-                    const dispatcher = message.member.voiceChannel.connection.playStream(new ytdl(songs[0], { filter: "audioonly" }));
+                // @ts-ignore
+                const dispatcher = message.member.voiceChannel.connection.playStream(new ytdl(songs[0], { filter: "audioonly" }), "video");
 
-                    dispatcher.setVolume(volume);
+                dispatcher.setVolume(volume);
 
-                    setTimeout(() => {
-                        if (songs.length == 0) {
-                            setTimeout(() => {
-                                disconnect();
-                            }, 1);
-                        } else {
-                            songs.shift();
-                        }
-                    }, dispatcher.totalStreamTime);
-                }
+                setTimeout(() => {
+                    if (songs.length == 0) {
+                        setTimeout(() => {
+                            disconnect();
+                        }, 1);
+                    } else {
+                        songs.shift();
+                    }
+                }, dispatcher.totalStreamTime);
 
                 console.log(url);
                 break;
